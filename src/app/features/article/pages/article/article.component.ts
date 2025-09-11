@@ -24,6 +24,7 @@ import { FollowButtonComponent } from "../../../profile/components/follow-button
 @Component({
   selector: "app-article-page",
   templateUrl: "./article.component.html",
+  styleUrls: ["./article.component.css"],
   imports: [
     ArticleMetaComponent,
     RouterLink,
@@ -108,11 +109,15 @@ export default class ArticleComponent implements OnInit {
   }
 
   addComment() {
+    if (!this.commentControl.value.trim()) {
+      return;
+    }
+
     this.isSubmitting = true;
     this.commentFormErrors = null;
 
     this.commentsService
-      .add(this.article.slug, this.commentControl.value)
+      .add(this.article.slug, this.commentControl.value.trim())
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (comment) => {

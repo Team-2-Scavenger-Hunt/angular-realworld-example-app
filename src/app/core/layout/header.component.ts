@@ -11,4 +11,13 @@ import { IfAuthenticatedDirective } from "../auth/if-authenticated.directive";
 })
 export class HeaderComponent {
   currentUser$ = inject(UserService).currentUser;
+  isMobileMenuOpen = false;
+
+  toggleMobileMenu(): void {
+    this.isMobileMenuOpen = !this.isMobileMenuOpen;
+  }
+
+  closeMobileMenu(): void {
+    this.isMobileMenuOpen = false;
+  }
 }
