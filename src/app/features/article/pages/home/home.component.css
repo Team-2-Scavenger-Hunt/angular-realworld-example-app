@@ -1,7 +1,82 @@
 .nav-link {
   cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.nav-link:hover {
+  color: #5cb85c;
+  transform: translateY(-1px);
+}
+
+.nav-link:focus {
+  outline: 2px solid #5cb85c;
+  outline-offset: 2px;
 }
 
 .tag-pill {
   cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.tag-pill:hover {
+  background-color: #5cb85c;
+  color: white;
+  transform: translateY(-1px);
+}
+
+.tag-pill:focus {
+  outline: 2px solid #5cb85c;
+  outline-offset: 2px;
+}
+
+/* Enhanced article preview styles */
+.article-preview {
+  transition: all 0.2s ease-in-out;
+  border-bottom: 1px solid #e5e5e5;
+  padding: 1.5rem 0;
+}
+
+.article-preview:hover {
+  background-color: #f8f9fa;
+  transform: translateX(5px);
+}
+
+.article-preview h1 {
+  transition: color 0.2s ease-in-out;
+}
+
+.article-preview:hover h1 {
+  color: #5cb85c;
+}
+
+/* Enhanced pagination styles */
+.pagination .page-link {
+  transition: all 0.2s ease-in-out;
+}
+
+.pagination .page-link:hover {
+  background-color: #5cb85c;
+  border-color: #5cb85c;
+  color: white;
+  transform: translateY(-1px);
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #5cb85c;
+  border-color: #5cb85c;
+}
+
+/* Enhanced feed toggle styles */
+.feed-toggle .nav-link {
+  border: 1px solid transparent;
+  border-bottom: 2px solid transparent;
+}
+
+.feed-toggle .nav-link.active {
+  border-bottom-color: #5cb85c;
+  color: #5cb85c;
+}
+
+.feed-toggle .nav-link:hover:not(.active) {
+  border-bottom-color: rgba(92, 184, 92, 0.5);
 }

@@ -8,18 +8,20 @@
           @if (canModify) {
             <span>
               <a
-                class="btn btn-sm btn-outline-secondary"
+                class="btn btn-sm btn-outline-secondary interactive-btn"
                 [routerLink]="['/editor', article.slug]"
               >
                 <i class="ion-edit"></i> Edit Article
               </a>
 
               <button
-                class="btn btn-sm btn-outline-danger"
-                [ngClass]="{ disabled: isDeleting }"
+                class="btn btn-sm btn-outline-danger interactive-btn"
+                [class.loading]="isDeleting"
+                [disabled]="isDeleting"
                 (click)="deleteArticle()"
               >
-                <i class="ion-trash-a"></i> Delete Article
+                <i class="ion-trash-a"></i>
+                {{ isDeleting ? "Deleting..." : "Delete Article" }}
               </button>
             </span>
           } @else {
@@ -46,7 +48,10 @@
     <div class="container page">
       <div class="row article-content">
         <div class="col-md-12">
-          <div [innerHTML]="article.body | markdown | async"></div>
+          <div
+            class="article-content"
+            [innerHTML]="article.body | markdown | async"
+          ></div>
 
           <ul class="tag-list">
             @for (tag of article.tagList; track tag) {
@@ -65,18 +70,20 @@
           @if (canModify) {
             <span>
               <a
-                class="btn btn-sm btn-outline-secondary"
+                class="btn btn-sm btn-outline-secondary interactive-btn"
                 [routerLink]="['/editor', article.slug]"
               >
                 <i class="ion-edit"></i> Edit Article
               </a>
 
               <button
-                class="btn btn-sm btn-outline-danger"
-                [ngClass]="{ disabled: isDeleting }"
+                class="btn btn-sm btn-outline-danger interactive-btn"
+                [class.loading]="isDeleting"
+                [disabled]="isDeleting"
                 (click)="deleteArticle()"
               >
-                <i class="ion-trash-a"></i> Delete Article
+                <i class="ion-trash-a"></i>
+                {{ isDeleting ? "Deleting..." : "Delete Article" }}
               </button>
             </span>
           } @else {
@@ -110,17 +117,33 @@
                     placeholder="Write a comment..."
                     rows="3"
                     [formControl]="commentControl"
+                    maxlength="500"
+                    #commentTextarea
                   ></textarea>
+                  <div class="comment-form-footer">
+                    <small class="text-muted character-count">
+                      {{ commentControl.value.length }}/500 characters
+                    </small>
+                  </div>
                 </div>
                 <div class="card-footer">
-                  <img
-                    [src]="
-                      currentUser?.image === null ? '' : currentUser?.image
-                    "
-                    class="comment-author-img"
-                  />
-                  <button class="btn btn-sm btn-primary" type="submit">
-                    Post Comment
+                  <div class="comment-form-user">
+                    <img
+                      [src]="currentUser?.image || ''"
+                      class="comment-author-img"
+                      [alt]="currentUser?.username || 'User'"
+                    />
+                    <span class="comment-form-username">{{
+                      currentUser?.username
+                    }}</span>
+                  </div>
+                  <button
+                    class="btn btn-sm btn-primary"
+                    type="submit"
+                    [class.loading]="isSubmitting"
+                    [disabled]="isSubmitting || !commentControl.value.trim()"
+                  >
+                    {{ isSubmitting ? "Posting..." : "Post Comment" }}
                   </button>
                 </div>
               </fieldset>

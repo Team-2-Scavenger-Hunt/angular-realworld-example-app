@@ -2,64 +2,109 @@
   <div class="container">
     <a class="navbar-brand" routerLink="/">conduit</a>
 
-    <!-- Show this for logged out users -->
-    <ul *ifAuthenticated="false" class="nav navbar-nav pull-xs-right">
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/"> Home </a>
-      </li>
+    <!-- Mobile menu toggle button -->
+    <button
+      class="navbar-toggler d-md-none"
+      type="button"
+      (click)="toggleMobileMenu()"
+      [attr.aria-expanded]="isMobileMenuOpen"
+      aria-controls="navbarNav"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon">
+        <i class="ion-navicon-round" [class.rotate]="isMobileMenuOpen"></i>
+      </span>
+    </button>
 
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/login" routerLinkActive="active">
-          Sign in
-        </a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/register" routerLinkActive="active">
-          Sign up
-        </a>
-      </li>
-    </ul>
-
-    <!-- Show this for logged in users -->
-    <ul *ifAuthenticated="true" class="nav navbar-nav pull-xs-right">
-      <li class="nav-item">
-        <a
-          class="nav-link"
-          routerLink="/"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }"
-        >
-          Home
-        </a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/editor" routerLinkActive="active">
-          <i class="ion-compose"></i>&nbsp;New Article
-        </a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/settings" routerLinkActive="active">
-          <i class="ion-gear-a"></i>&nbsp;Settings
-        </a>
-      </li>
-
-      @if (currentUser$ | async; as currentUser) {
+    <!-- Navigation menu -->
+    <div class="navbar-collapse" [class.show]="isMobileMenuOpen" id="navbarNav">
+      <!-- Show this for logged out users -->
+      <ul *ifAuthenticated="false" class="nav navbar-nav pull-xs-right">
         <li class="nav-item">
           <a
-            class="nav-link"
-            [routerLink]="['/profile', currentUser.username]"
-            routerLinkActive="active"
+            class="nav-link interactive-link"
+            routerLink="/"
+            (click)="closeMobileMenu()"
           >
-            @if (currentUser.image) {
-              <img [src]="currentUser.image" class="user-pic" />
-            }
-            {{ currentUser.username }}
+            Home
           </a>
         </li>
-      }
-    </ul>
+
+        <li class="nav-item">
+          <a
+            class="nav-link interactive-link"
+            routerLink="/login"
+            routerLinkActive="active"
+            (click)="closeMobileMenu()"
+          >
+            Sign in
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a
+            class="nav-link interactive-link"
+            routerLink="/register"
+            routerLinkActive="active"
+            (click)="closeMobileMenu()"
+          >
+            Sign up
+          </a>
+        </li>
+      </ul>
+
+      <!-- Show this for logged in users -->
+      <ul *ifAuthenticated="true" class="nav navbar-nav pull-xs-right">
+        <li class="nav-item">
+          <a
+            class="nav-link interactive-link"
+            routerLink="/"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            (click)="closeMobileMenu()"
+          >
+            Home
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a
+            class="nav-link interactive-link"
+            routerLink="/editor"
+            routerLinkActive="active"
+            (click)="closeMobileMenu()"
+          >
+            <i class="ion-compose"></i>&nbsp;New Article
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a
+            class="nav-link interactive-link"
+            routerLink="/settings"
+            routerLinkActive="active"
+            (click)="closeMobileMenu()"
+          >
+            <i class="ion-gear-a"></i>&nbsp;Settings
+          </a>
+        </li>
+
+        @if (currentUser$ | async; as currentUser) {
+          <li class="nav-item">
+            <a
+              class="nav-link interactive-link"
+              [routerLink]="['/profile', currentUser.username]"
+              routerLinkActive="active"
+              (click)="closeMobileMenu()"
+            >
+              @if (currentUser.image) {
+                <img [src]="currentUser.image" class="user-pic" />
+              }
+              {{ currentUser.username }}
+            </a>
+          </li>
+        }
+      </ul>
+    </div>
   </div>
 </nav>
