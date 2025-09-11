@@ -1,28 +1,28 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpParams } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { ArticleListConfig } from "../models/article-list-config.model";
 import { Article } from "../models/article.model";
+import { HttpService } from "../../../core/http/http.service";
 
 @Injectable({ providedIn: "root" })
 export class ArticlesService {
-  constructor(private readonly http: HttpClient) {}
+  constructor(private readonly http: HttpService) {}
 
   query(
     config: ArticleListConfig,
   ): Observable<{ articles: Article[]; articlesCount: number }> {
-    // Convert any filters over to Angular's URLSearchParams
-    let params = new HttpParams();
+    // Convert filters to plain object for Axios params
+    const params: any = {};
 
     Object.keys(config.filters).forEach((key) => {
       // @ts-ignore
-      params = params.set(key, config.filters[key]);
+      params[key] = config.filters[key];
     });
 
     return this.http.get<{ articles: Article[]; articlesCount: number }>(
       "/articles" + (config.type === "feed" ? "/feed" : ""),
-      { params },
+      params,
     );
   }
 

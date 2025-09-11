@@ -1,12 +1,12 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
-import { HttpClient } from "@angular/common/http";
 import { Comment } from "../models/comment.model";
+import { HttpService } from "../../../core/http/http.service";
 
 @Injectable({ providedIn: "root" })
 export class CommentsService {
-  constructor(private readonly http: HttpClient) {}
+  constructor(private readonly http: HttpService) {}
 
   getAll(slug: string): Observable<Comment[]> {
     return this.http
