@@ -1,0 +1,27 @@
+import { api } from "../../../core/http/api";
+import { Profile } from "../../../types";
+
+class ProfileService {
+  async getProfile(username: string): Promise<Profile> {
+    const response = await api.get<{ profile: Profile }>(
+      `/profiles/${username}`,
+    );
+    return response.data.profile;
+  }
+
+  async followUser(username: string): Promise<Profile> {
+    const response = await api.post<{ profile: Profile }>(
+      `/profiles/${username}/follow`,
+    );
+    return response.data.profile;
+  }
+
+  async unfollowUser(username: string): Promise<Profile> {
+    const response = await api.delete<{ profile: Profile }>(
+      `/profiles/${username}/follow`,
+    );
+    return response.data.profile;
+  }
+}
+
+export const profileService = new ProfileService();
